@@ -16,6 +16,7 @@
 
 \documentclass{scrartcl}
 
+\usepackage{showframe}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
@@ -85,7 +86,7 @@ features added, e.\,g.\@ complete anchor support and custom colors.
 Currently the package provides the following shapes and commands:
 \begin{itemize}\itemsep0pt
 	\item \verb|hub|, \verb|switch|, \verb|router|, \verb|client|,
-	\verb|server|, \verb|nuc|, \verb|messageclosed|, \verb|messageopen|,
+	\verb|server|, \verb|nuc|, \verb|lannuc| \verb|messageclosed|, \verb|messageopen|,
 	\verb|notebook|
 	\item \verb|\tikzextractx|, \verb|\tikzextracty|
 	\item \verb|\moeptikzset|{}
@@ -130,7 +131,7 @@ Then you probably like what \moeptikz{} can do for you:
 	\draw[dashed,black,line width=1pt] (r1.west) -- ++(-1,1)
 		node[above right] {\nodelabel{eth0: 172.16.0.1/24}} -- ++(3,0);
 
-	\draw[line width=1.5pt,-latex,black!40] (r1) to[bend right] 
+	\draw[line width=1.5pt,-latex,black!40] (r1) to[bend right]
 		node[below,yshift=-2mm,messageclosed,minimum size=5mm] {} (server3);
 \end{tikzpicture}
 \caption{What \protect\moeptikz{} can (or cannot?) do for you}
@@ -180,7 +181,7 @@ notice the difference:
 	\draw[dashed,black,line width=1pt] (r1.west) -- ++(-1,1)
 		node[above right] {\nodelabel{eth0: 172.16.0.1/24}} -- ++(3,0);
 
-	\draw[line width=1.5pt,-latex,black!40] (r1) to[bend right] 
+	\draw[line width=1.5pt,-latex,black!40] (r1) to[bend right]
 		node[below,yshift=-2mm,messageclosed,minimum size=5mm] {} (server3);
 \end{tikzpicture}
 \caption{What \protect\moeptikz{} can do for you if you can do your math}
@@ -228,10 +229,12 @@ away from the visible shape.
 	\hskip5mm%
 	\presentnode{nuc}{nuc}
 	\vskip5mm
+	\presentnode{lannuc}{lannuc}
+	\hskip5mm%
 	\presentnode{messageclosed}{messageclosed}
 	\hskip5mm%
 	\presentnode{messageopen}{messageopen}
-	\hskip5mm%
+	\vskip5mm
 	\presentnode{notebook}{notebook}
 	\caption{Shapes currently defined}
 	\label{fig:shapes}

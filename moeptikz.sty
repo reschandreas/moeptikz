@@ -21,6 +21,7 @@
 \RequirePackage{xparse}
 \RequirePackage{tikz}
 \RequirePackage{makeshape}
+\RequirePackage{graphicx}
 
 \usetikzlibrary{patterns}
 
@@ -1574,4 +1575,108 @@ messageclosed/.default={1cm,black!30,black}
     LineSpacing=3pt
 }
 
+%==============================================================================
+% lannuc
+%==============================================================================
+\def\lannucanchor{
+	\pgf@xa=\pgfshapeminwidth
+	\pgf@ya=\pgfshapeminwidth
+	\pgf@xa=.5\pgf@xa
+	\pgf@ya=.5\pgf@ya
+
+	\pgfsetcornersarced{\pgfpoint{1pt}{1pt}}
+	\pgfpathmoveto{\pgfpoint{0}{\pgf@ya}}
+	\pgfpathlineto{\pgfpoint{\pgf@xa}{.25\pgf@ya}}
+	\pgfpathlineto{\pgfpoint{\pgf@xa}{-.25\pgf@ya}}
+	\pgfpathlineto{\pgfpoint{0}{-\pgf@ya}}
+	\pgfpathlineto{\pgfpoint{-\pgf@xa}{-.25\pgf@ya}}
+	\pgfpathlineto{\pgfpoint{-\pgf@xa}{.25\pgf@ya}}
+	\pgfpathclose
+}
+\def\lannucborder{
+	\moeptikz@setshading
+	\pgfsetstrokecolor{black}
+
+	% body
+	\pgfmathparse{.025*\pgfshapeminwidth}
+	\pgfsetlinewidth\pgfmathresult
+	\pgfsetcornersarced{\pgfpoint{1pt}{1pt}}
+
+	\pgfmoveto{\northeast \pgf@x=0pt}
+	\pgflineto{\northeast \pgf@y=.25\pgf@y}
+	\pgflineto{\northeast \pgf@x=0pt \pgf@y=-.5\pgf@y}
+	\pgflineto{\northeast \pgf@x=-\pgf@x \pgf@y=.25\pgf@y}
+	\pgfclosepath
+	\pgfshadepath{moeptikz@shadingnuc}{0}
+	\pgfusepath{stroke}
+
+	\pgfmoveto{\northeast \pgf@x=-\pgf@x \pgf@y=-.25\pgf@y}
+	\pgflineto{\northeast \pgf@x=-\pgf@x \pgf@y=.25\pgf@y}
+	\pgflineto{\northeast \pgf@x=0pt \pgf@y=-.5\pgf@y}
+	\pgflineto{\northeast \pgf@y=.25\pgf@y}
+	\pgflineto{\northeast \pgf@y=-.25\pgf@y}
+	\pgflineto{\northeast \pgf@x=0pt \pgf@y=-\pgf@y}
+	\pgfclosepath
+	\pgfshadepath{moeptikz@shading}{0}
+	\pgfusepath{stroke}
+
+	\pgfmoveto{\northeast \pgf@x=0pt \pgf@y=-.5\pgf@y}
+	\pgflineto{\northeast \pgf@x=0pt \pgf@y=-\pgf@y}
+	\pgfusepath{stroke}
+
+	\pgflineto{\northeast \pgf@x=0pt \pgf@y=-\pgf@y}
+	\pgfclosepath
+	\pgfshadepath{moeptikz@shading}{0}
+	\pgfusepath{stroke}
+
+	\pgftransformshift{\northeast \pgf@x=0pt \pgf@y=.25\pgf@y}{
+		\pgfsetfillcolor{cyan}
+		\pgfpathcircle{
+			\northeast \pgf@x=.05\pgf@x\pgf@y=.45\pgf@y
+		}{
+			.5\pgflinewidth
+		}
+		\pgfusepath{fill}
+	}
+}
+\pgfdeclareshape{@lannuc}{
+	\setpaths{\lannucanchor}{\lannucborder}
+	\savedanchor\northeast{%
+		\pgf@x = \pgfshapeminwidth
+		\pgf@y = \pgfshapeminwidth
+		\pgf@x=.5\pgf@x
+		\pgf@y=.5\pgf@y
+	}
+	\savedanchor\southwest{%
+		\pgf@x = \pgfshapeminwidth
+		\pgf@y = \pgfshapeminwidth
+		\pgf@x=-.5\pgf@x
+		\pgf@y=-.5\pgf@y
+	}
+	\anchor{north}{\northeast \pgf@y=.95\pgf@y \pgf@x=0pt}
+	\anchor{north east}{\northeast \pgf@x=.58\pgf@x \pgf@y=.58\pgf@y}
+	\anchor{east}{\northeast \pgf@y=0pt}
+	\anchor{south east}{\northeast \pgf@x=.58\pgf@x \pgf@y=-.58\pgf@y}
+	\anchor{south}{\northeast \pgf@x=0pt \pgf@y=-.95\pgf@y}
+	\anchor{south west}{\northeast \pgf@x=-.58\pgf@x \pgf@y=-.58\pgf@y}
+	\anchor{west}{\northeast \pgf@x=-\pgf@x \pgf@y=0pt}
+	\anchor{north west}{\northeast \pgf@x=-.58\pgf@x \pgf@y=.58\pgf@y}
+	\anchor{text}{
+		\pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+		\pgfmathsetlength\pgf@y{\pgfshapeminwidth}%
+		\pgf@x=0pt
+		\pgf@y=-.75\pgf@y
+		\advance\pgf@x by -.5\wd\pgfnodeparttextbox
+		\advance\pgf@y by -\ht\pgfnodeparttextbox
+	}
+}
+
+\tikzset{
+lannuc/.style 2 args={
+	shape=@lannuc,
+	minimum size=#1,
+	fill=#2
+},
+lannuc/.default={1cm}{black}
+}
 \endinput
